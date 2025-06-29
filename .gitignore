@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.p~  
+*.log
+
+# Virtual environment
+venv/
+.env/
+.venv/
+ENV/
+env/
+*.env
+*.env.*
+
+# FastAPI / Uvicorn related
+instance/
+*.db
+*.sqlite3
+
+# MyPy & Pylint
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Unit test / coverage
+.coverage
+htmlcov/
+.tox/
+.nox/
+.cache/
+pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# VS Code
+.vscode/
+
+# JetBrains (PyCharm, IntelliJ)
+.idea/
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Docker (optional)
+*.pid
+*.pid.lock
+
+# Jupyter Notebooks (if used)
+.ipynb_checkpoints/
+
+# __pypackages__ (PEP 582)
+__pypackages__/
+
+# Local build artifacts
+build/
+dist/
+*.egg-info/
