@@ -21,8 +21,18 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
-@router.post("/")
-def upload_file(file: UploadFile = File(...), current_user: models.User = Depends(get_current_user)):
-    key = f"{current_user.id}/{file.filename}"
-    url = s3.upload_to_s3(file, key)
-    return {"file_url": url}
+# @router.post("/")
+# def upload_file(file: UploadFile = File(...), current_user: models.User = Depends(get_current_user)):
+#     key = f"{current_user.id}/{file.filename}"
+#     url = s3.upload_to_s3(file, key)
+#     return {"file_url": url}
+
+
+
+# CLOUDFRONT_URL = "https://your-distribution-id.cloudfront.net"
+
+# BUCKET_NAME = "notes-app-cc"
+
+# def upload_to_s3(file: UploadFile, key: str):
+#     s3.upload_fileobj(file.file, BUCKET_NAME, key, ExtraArgs={"ACL": "public-read"})
+#     return f"{CLOUDFRONT_URL}/{key}"

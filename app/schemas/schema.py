@@ -18,7 +18,12 @@ class NoteOut(NoteBase):
         orm_mode = True
 
 # ---------- User Schemas ----------
-class UserCreate(BaseModel):
+class UserCredentials(BaseModel):
+    email: str
+    password: str
+
+class UserCreate(UserCredentials):
+    name: str
     email: str
     password: str
 

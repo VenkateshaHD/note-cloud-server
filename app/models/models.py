@@ -7,8 +7,10 @@ class User(Base):
     __tablename__ = "users"
     
     id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, index=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
+    created_at = Column(String(255), nullable=False)
 
     notes = relationship("Note", back_populates="owner")
 
@@ -21,6 +23,8 @@ class Note(Base):
     content = Column(Text, nullable=True)
     file_url = Column(String(255), nullable=True)
     is_public = Column(Integer, default=0)  # 0 for private, 1 for public
+    created_at = Column(String(255), nullable=False)
+    updated_at = Column(String(255), nullable=False)
 
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("User", back_populates="notes")
