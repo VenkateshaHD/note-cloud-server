@@ -70,7 +70,7 @@ def create_note_with_file(
 #     db.refresh(new_note)
 #     return new_note
 
-@router.get("/{note_id}", response_model=schema.NoteOut)
+@router.get("/{note_id}")
 def get_note(note_id: int, db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
     note = db.query(models.Note).filter(models.Note.id == note_id, models.Note.owner_id == current_user.id).first()
     if not note:
