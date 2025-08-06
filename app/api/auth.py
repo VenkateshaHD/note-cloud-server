@@ -30,7 +30,7 @@ def register(request: UserCreate,db: Session = Depends(database.get_db)):
 @router.post("/login")
 def login(request: schema.UserCredentials, db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == request.email).first()
-  
+
     if not user or not security.verify_password(request.password, user.hashed_password):
         # raise HTTPException(status_code=400, detail="Invalid credentials")
         return {"status": 0,"message":"Invalid credentials"}
