@@ -44,7 +44,7 @@ def create_note_with_file(
 
     if files:
         print(files.filename)
-        s3_key = f"{current_user.id}-{files.filename}-{datetime.now()}"
+        s3_key = f"{datetime.now()}-{current_user.id}-{files.filename}"
         file_url = upload_to_s3(files, s3_key)  # This should return the CloudFront link
 
     note = models.Note(
@@ -61,6 +61,30 @@ def create_note_with_file(
     db.commit()
     db.refresh(note)
     return {"status": 1, "message": "Note created successfully", "note":  note}
+
+@router.post("/update/{note_id}")
+def update_note(note_id: int,  
+    title: str = Form(...),
+    content: str = Form(""),
+    files: UploadFile = File(None), 
+    db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
+    db_note = db.query(models.Note).filter(models.Note.id == note_id, models.Note.owner_id == current_user.id).first()
+    if not db_note:
+        raise HTTPException(status_code=404, detail="Note not found or You are Not a owner of this note")
+    
+    db_note.title = title
+    db_note.content = content
+
+    if files:
+        print(files.filename)
+        s3_key = f"{datetime.now()}-{current_user.id}-{files.filename}"
+        file_url = upload_to_s3(files, s3_key)  # This should return the CloudFront link
+        db_note.file_url = file_url
+    # db_note.is_public = note.isPublic
+    db_note.updated_at = str(datetime.today())
+    db.commit()
+    db.refresh(db_note)
+    return db_note
 
 # @router.post("/add", response_model=schema.NoteOut)
 # def create_note(note: schema.NoteCreate, db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
@@ -81,7 +105,7 @@ def get_note(note_id: int, db: Session = Depends(database.get_db), current_user:
 def delete_note(note_id: int, db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
     note = db.query(models.Note).filter(models.Note.id == note_id, models.Note.owner_id == current_user.id).first()
     if not note:
-        raise HTTPException(status_code=404, detail="Note not found")
+        raise HTTPException(status_code=404, detail="Note not found or You are Not a owner of this note")
     db.delete(note)
     db.commit()
     return {"status": 1, "message": "Note deleted successfully"}

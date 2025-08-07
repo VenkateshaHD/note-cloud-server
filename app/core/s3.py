@@ -1,3 +1,4 @@
+import mimetypes
 import boto3
 from fastapi import UploadFile
 from app.config import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
@@ -15,8 +16,15 @@ s3 = boto3.client(
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY
 )
 
+def get_content_type(filename: str) -> str:
+    return mimetypes.guess_type(filename)[0] or "application/octet-stream"
+
 def upload_to_s3(file: UploadFile, key: str):
-    content_type = file.content_type or "application/octet-stream"
+    # content_type = file.content_type or "application/octet-stream"
+    content_type = get_content_type(file.filename)
+
+    print(content_type)
+
 #     """
 #     Uploads a file to AWS S3 and returns the public file URL.
 #     :param file: FastAPI UploadFile object
