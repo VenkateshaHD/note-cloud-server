@@ -19,7 +19,7 @@ def hash_password(password: str) -> str:
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return hash_password(plain_password) == hashed_password
 
-def create_token(data: dict, expires_minutes: int = 30) -> str:
+def create_token(data: dict, expires_minutes: int = 300) -> str:
     """
     Create a JWT token with given payload and expiry.
     """

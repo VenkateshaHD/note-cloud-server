@@ -12,7 +12,6 @@ def startup_event():
     print("Creating database tables...")
 
 # Base.metadata.create_all(bind=engine)
-
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(notes.router, prefix="/api/notes", tags=["notes"])
 app.include_router(upload.router, prefix="/api/upload", tags=["upload"])

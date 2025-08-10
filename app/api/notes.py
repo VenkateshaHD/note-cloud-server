@@ -62,7 +62,7 @@ def create_note_with_file(
     db.refresh(note)
     return {"status": 1, "message": "Note created successfully", "note":  note}
 
-@router.post("/update/{note_id}")
+@router.put("/{note_id}")
 def update_note(note_id: int,  
     title: str = Form(...),
     content: str = Form(""),
@@ -84,7 +84,7 @@ def update_note(note_id: int,
     db_note.updated_at = str(datetime.today())
     db.commit()
     db.refresh(db_note)
-    return db_note
+    return {"status":1,"data":db_note}
 
 # @router.post("/add", response_model=schema.NoteOut)
 # def create_note(note: schema.NoteCreate, db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
@@ -101,7 +101,7 @@ def get_note(note_id: int, db: Session = Depends(database.get_db), current_user:
         raise HTTPException(status_code=404, detail="Note not found")
     return note
 
-@router.get("/delete/{note_id}")
+@router.delete("/{note_id}")
 def delete_note(note_id: int, db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
     note = db.query(models.Note).filter(models.Note.id == note_id, models.Note.owner_id == current_user.id).first()
     if not note:
