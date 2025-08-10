@@ -11,5 +11,8 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 
+CLOUDFRONT_URL = os.getenv("CLOUDFRONT_URL")
+BUCKET_NAME = os.getenv("BUCKET_NAME")
+
 # JWT Secret Key
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback_dev_secret_key")

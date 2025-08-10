@@ -1,13 +1,13 @@
 import mimetypes
+import os
 import boto3
 from fastapi import UploadFile
-from app.config import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+from app.config import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, BUCKET_NAME, CLOUDFRONT_URL
 
 # Replace this with your actual S3 bucket name
 
-CLOUDFRONT_URL = "https://dhfeh4cz70vvz.cloudfront.net"
-
-BUCKET_NAME = "notes-files-cc"
+# CLOUDFRONT_URL = "https://dhfeh4cz70vvz.cloudfront.net"
+# BUCKET_NAME = "notes-files-cc"
 
 # Create a boto3 S3 client
 s3 = boto3.client(
